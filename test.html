@@ -1,30 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets AJAX Example</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Sheets API Example</title>
 </head>
 <body>
-    <div id="data"></div>
+  <h1>Google Sheets API Example</h1>
+  <div id="output"></div>
 
-    <script>
-        $(document).ready(function(){
-            $.ajax({
-                url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQhJHs5Y3N8N0qOE204gonyatOTSi-EZlHIBgdmpV-HATJbF--9ZrqWVq1PNpDaQh1FrzOnQWW4HllP/gviz/tq?tqx=out:json',
-                dataType: 'json',
-                success: function(data) {
-                    // Process the data and display it on the page
-                    console.log(data);
-                    // Example: displaying the first entry's title
-                    $('#data').html('Title: ' + data.table.rows[0].c[0].v);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data from Google Sheet:', error);
-                }
-            });
-        });
-    </script>
+  <script>
+    // Replace these values with your own
+    const spreadsheetId = '1dAUZhsTG5nQAkLjSgLf0RHiu5eiCNMaZw9PW-NbUgCA';
+    const range = 'Sheet2!A1:B2';
+    const apiKey = 'AIzaSyAiYCVlDoQ3-uf91Ce0snUYZ10c__OORzA';
+
+    // Construct the URL for the Google Sheets API
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+
+    // Fetch data from Google Sheets
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        // Process the retrieved data
+        const values = data.values;
+        const outputElement = document.getElementById('output');
+        outputElement.innerHTML = '<h2>Retrieved Data:</h2>';
+        if (values && values.length > 0) {
+          outputElement.innerHTML += '<ul>';
+          values.forEach(row => {
+            outputElement.innerHTML += `<li>${row.join(', ')}</li>`;
+          });
+          outputElement.innerHTML += '</ul>';
+        } else {
+          outputElement.innerHTML += '<p>No data found.</p>';
+        }
+      })
+      .catch(error => {
+        // Handle errors
+        console.error('Error fetching data:', error);
+        const outputElement = document.getElementById('output');
+        outputElement.innerHTML = '<h2>Error:</h2><p>Failed to fetch data. Check console for details.</p>';
+      });
+  </script>
 </body>
 </html>
