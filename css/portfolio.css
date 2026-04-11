@@ -170,9 +170,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%;display:block}ul{list-st
 @media(max-width:1024px){
   .pf-about-hero{grid-template-columns:1fr}
   .pf-about-profile{position:static;max-width:400px;margin:0 auto}
-  .pf-pillar-featured{grid-template-columns:1fr;grid-template-rows:auto}
-  .pf-pillar-featured .pf-pillar-number,.pf-pillar-featured .pf-pillar-icon-wrap,.pf-pillar-featured h3,.pf-pillar-featured p,.pf-pillar-featured .pf-pillar-tags,.pf-pillar-featured .pf-pillar-metric{grid-column:1}
-  .pf-pillar-featured .pf-pillar-icon-wrap{grid-row:auto}
+  .pf-pillar-featured{display:block}
   .pf-timeline{grid-template-columns:1fr 1fr;gap:32px}
   .pf-timeline::before{display:none}
 }
